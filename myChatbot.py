@@ -40,7 +40,7 @@ embedder = SentenceTransformer('all-MiniLM-L6-v2')
 @st.cache_data
 def load_data():
     try:
-        df = pd.read_csv('my_data.csv')  # Replace with your dataset file name
+        df = pd.read_csv('my_data_chatbot.csv')  # Replace with your dataset file name
         if 'question' not in df.columns or 'answer' not in df.columns:
             st.error("The CSV file must contain 'question' and 'answer' columns.")
             st.stop()
