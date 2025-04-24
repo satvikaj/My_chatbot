@@ -110,14 +110,13 @@
 #     st.session_state.messages.append({"role": "assistant", "content": response})
 #     st.rerun()
 
-
-
 import streamlit as st
 import pandas as pd
 import google.generativeai as genai
 from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
+import torch
 
 # UI Styling
 st.markdown("""
@@ -148,8 +147,9 @@ st.markdown("""
 genai.configure(api_key="YOUR_API_KEY_HERE")  # Update with your real API key
 gemini = genai.GenerativeModel('gemini-1.5-flash')
 
-# Load the embedder
-embedder = SentenceTransformer('all-MiniLM-L6-v2')
+# Load the embedder and set device
+device = "cuda" if torch.cuda.is_available() else "cpu"
+embedder = SentenceTransformer('all-MiniLM-L6-v2', device=device)
 
 # Load the dataset and FAISS index
 @st.cache_data
